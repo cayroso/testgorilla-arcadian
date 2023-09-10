@@ -14,19 +14,17 @@ namespace WebApiAngular.Controllers;
 [Produces("application/json")]
 public class TransactionController : ControllerBase
 {
-    private readonly ILogger<WeatherForecastController> _logger;
+    private readonly AppDbContext _dbContext;
 
-    public TransactionController(ILogger<WeatherForecastController> logger)
+    public TransactionController(AppDbContext dbContext)
     {
-        _logger = logger;
+        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
     [HttpGet("Get")]
-    public async Task<IActionResult> GetAsync(
-        [FromServices] AppDbContext dbContext,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
     {
-        var dto = await dbContext.Transactions
+        var dto = await _dbContext.Transactions
             .AsNoTracking()
             .Select(e => new GetTransactions
             {
@@ -42,11 +40,10 @@ public class TransactionController : ControllerBase
 
     [HttpGet("GetById/{id:int}")]
     public async Task<IActionResult> GetByIdAsync(
-        [FromServices] AppDbContext dbContext,
         [FromRoute] int id,
         CancellationToken cancellationToken)
     {
-        var dto = await dbContext.Transactions
+        var dto = await _dbContext.Transactions
             .AsNoTracking()
             .Where(e => e.TransactionId == id)
             .Select(e => new GetTransactionById
@@ -66,7 +63,6 @@ public class TransactionController : ControllerBase
 
     [HttpPost("Create")]
     public async Task<IActionResult> PostCreatAsync(
-        [FromServices] AppDbContext dbContext,
         [FromBody] AddTransaction req,
         CancellationToken cancellationToken)
     {
@@ -80,9 +76,9 @@ public class TransactionController : ControllerBase
             Cost = req.Cost,
         };
 
-        await dbContext.AddAsync(data, cancellationToken);
+        await _dbContext.AddAsync(data, cancellationToken);
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
         return Ok(data.TransactionId);
     }
