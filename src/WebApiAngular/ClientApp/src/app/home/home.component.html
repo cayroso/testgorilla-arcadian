@@ -8,9 +8,16 @@
     </h6>
   </div>
   <div class="col-auto">
-    <a routerLink="/create" class="btn btn-primary">
-      <span class="fas fa-fw fa-plus me-1"></span>Add
-    </a>
+    <div>
+      <button (click)="getTransactions()" class="btn btn-primary">
+        <span class="fas fa-fw fa-sync me-1"></span>Refresh
+      </button>
+
+      <a routerLink="/create" class="ms-1 btn btn-primary">
+        <span class="fas fa-fw fa-plus me-1"></span>Add
+      </a>
+    </div>
+    
   </div>
 </div>
 
@@ -37,7 +44,7 @@
         <td class="text-end">{{ currencyFormatter.format(transaction.cost) }}</td>
         <td class="text-center">
           <div class="btn-group" role="group" aria-label="Basic example">
-            <a routerLink="/view/{{transaction.id}}" class="btn btn-sm btn-outline-primary">
+            <a routerLink="/view/{{transaction.id}}" class="btn btn-sm btn-outline-secondary">
               <span class="fas fa-fw fa-eye me-1"></span>View
             </a>
             <a routerLink="/edit/{{transaction.id}}" class="btn btn-sm btn-outline-primary">

@@ -22,6 +22,8 @@ export class HomeComponent {
   });
 
   getTransactions() {
+    this.transactions = [];
+
     this.http.get<ITransaction[]>('/api/transaction/get').subscribe(result => {
       this.transactions = result;
     }, error => console.error(error));
