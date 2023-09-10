@@ -1,0 +1,83 @@
+<form #myForm="ngForm" (ngSubmit)="submit()">
+  <div class="row align-items-center">
+    <div class="col">
+      <h4>
+        Edit
+      </h4>
+    </div>
+    <div class="col-auto">
+      <div>
+        <button type="submit" [disabled]="!myForm.form.valid" class="btn btn-primary">
+          <span class="fas fa-fw fa-save me-1"></span>Save
+        </button>
+
+        <a routerLink="/" class="ms-2 btn btn-outline-secondary">
+          <span class="fas fa-fw fa-undo me-1"></span>Back
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-2">
+    <div *ngIf="errorMessage; then hasError; else noError">
+    </div>
+
+    <ng-template #hasError>
+      <div>
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+          <div>
+            <span class="fas fa-fw fa-triangle-exclamation"></span>
+          </div>
+          <div class="ms-2">
+            {{ errorMessage }}
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #noError>
+      <div>
+        <p *ngIf="!transaction"><em>Loading...</em></p>
+        <div *ngIf="transaction">
+          <div class="form-floating mb-3">
+            <input type="text" [(ngModel)]="transaction.name" #name="ngModel" id="name" name="name" class="form-control" placeholder="Transaction Name" required />
+            <label for="name">Transaction Name</label>
+            <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                 class="text-danger">
+              <div *ngIf="name.errors?.['required']">
+                Name is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="row row-cols-sm-2">
+            <div>
+              <div class="form-floating mb-3">
+                <input type="number" [(ngModel)]="transaction.cost" #cost="ngModel" id="cost" name="cost" class="form-control" placeholder="Cost" required />
+                <label for="cost">Cost</label>
+                <div *ngIf="cost.invalid && (cost.dirty || cost.touched)"
+                     class="text-danger">
+                  <div *ngIf="cost.errors?.['required']">
+                    Cost is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="form-floating mb-3">
+                <input type="date" [(ngModel)]="transaction.date" #date="ngModel" id="date" name="date" class="form-control" placeholder="Date" required />
+                <label for="date">Date</label>
+                <div *ngIf="date.invalid && (date.dirty || date.touched)"
+                     class="text-danger">
+                  <div *ngIf="date.errors?.['required']">
+                    Date is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</form>

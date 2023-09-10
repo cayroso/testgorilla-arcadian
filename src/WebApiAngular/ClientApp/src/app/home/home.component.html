@@ -1,12 +1,15 @@
-<div class="row align-items-center">
+<div *ngIf="transactions" class="row align-items-center">
   <div class="col">
     <h4>
       Dashboard/Transaction List
     </h4>
+    <h6>
+      {{ transactions.length}} record(s)
+    </h6>
   </div>
   <div class="col-auto">
     <a routerLink="/create" class="btn btn-primary">
-     <span class="fas fa-fw fa-plus me-1"></span>Add
+      <span class="fas fa-fw fa-plus me-1"></span>Add
     </a>
   </div>
 </div>
@@ -14,7 +17,7 @@
 <div class="mt-2">
 
   <p *ngIf="!transactions"><em>Loading transactions... Please wait.</em></p>
-  <table *ngIf="transactions" class="table border rounded">
+  <table *ngIf="transactions" class="table table-sm border rounded">
     <thead>
       <tr>
         <th>#</th>
@@ -29,13 +32,21 @@
           {{i+1}}
         </td>
         <td>
-            {{ transaction.name }}
+          {{ transaction.name }}
         </td>
         <td class="text-end">{{ currencyFormatter.format(transaction.cost) }}</td>
         <td class="text-center">
-          <a routerLink="/view/{{transaction.id}}" class="btn btn-sm btn-outline-primary">
-            <span class="fas fa-fw fa-eye me-1"></span>View
-          </a>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <a routerLink="/view/{{transaction.id}}" class="btn btn-sm btn-outline-primary">
+              <span class="fas fa-fw fa-eye me-1"></span>View
+            </a>
+            <a routerLink="/edit/{{transaction.id}}" class="btn btn-sm btn-outline-primary">
+              <span class="fas fa-fw fa-edit me-1"></span>Edit
+            </a>
+            <button (click)="deleteTransaction(transaction)" class="btn btn-sm btn-outline-danger">
+              <span class="fas fa-fw fa-trash me-1"></span>Delete
+            </button>
+          </div>
         </td>
       </tr>
     </tbody>

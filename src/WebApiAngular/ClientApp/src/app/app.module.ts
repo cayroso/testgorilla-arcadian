@@ -9,6 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { ViewComponent } from './view/view.component';
 import { CreateComponent } from './create/create.component';
+import { EditComponent } from './edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { CreateComponent } from './create/create.component';
     HomeComponent,
     ViewComponent,
     CreateComponent,
+    EditComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -25,6 +27,7 @@ import { CreateComponent } from './create/create.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'view/:id', component: ViewComponent },
+      { path: 'edit/:id', component: EditComponent },
       { path: 'create', component: CreateComponent },
       //  other routes will redirect to dashboard
       { path: '**', component: HomeComponent },

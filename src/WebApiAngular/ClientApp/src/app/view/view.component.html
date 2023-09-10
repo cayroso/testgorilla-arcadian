@@ -1,13 +1,23 @@
-<div class="row align-items-center">
+<div *ngIf="transaction" class="row align-items-center">
   <div class="col">
     <h4>
       View
     </h4>
   </div>
   <div class="col-auto">
-    <a routerLink="/" class="btn btn-outline-secondary">
-      <span class="fas fa-fw fa-undo me-1"></span>Back
-    </a>
+    <div>
+
+      <a routerLink="/edit/{{transaction.id}}" class="btn btn-outline-primary">
+        <span class="fas fa-fw fa-edit me-1"></span>Edit
+      </a>
+      <button (click)="deleteTransaction()" class="ms-1 btn btn-outline-danger">
+        <span class="fas fa-fw fa-trash me-1"></span>Delete
+      </button>
+      <a routerLink="/" class="ms-2 btn btn-outline-secondary">
+        <span class="fas fa-fw fa-undo me-1"></span>Back
+      </a>
+    </div>
+
   </div>
 </div>
 

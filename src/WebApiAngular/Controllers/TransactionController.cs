@@ -62,7 +62,7 @@ public class TransactionController : ControllerBase
     }
 
     [HttpPost("Create")]
-    public async Task<IActionResult> PostCreatAsync(
+    public async Task<IActionResult> CreateAsync(
         [FromBody] AddTransaction req,
         CancellationToken cancellationToken)
     {
@@ -77,6 +77,50 @@ public class TransactionController : ControllerBase
         };
 
         await _dbContext.AddAsync(data, cancellationToken);
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return Ok(data.TransactionId);
+    }
+
+
+    [HttpDelete("Delete/{id:int}")]
+    public async Task<IActionResult> DeleteByIdAsync(
+        [FromRoute] int id,
+        CancellationToken cancellationToken)
+    {
+        var data = await _dbContext.Transactions
+            .Where(e => e.TransactionId == id)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (data is null)
+            return NotFound($"Transaction with Id=\"{id}\" is not found.");
+
+        _dbContext.Remove(data);
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return Ok();
+    }
+
+    [HttpPut("Update")]
+    public async Task<IActionResult> UpdatedAsync(
+       [FromBody] UpdateTransaction req,
+       CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+            return Problem();
+
+        var data = await _dbContext.Transactions
+            .Where(e => e.TransactionId == req.Id)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (data is null)
+            return NotFound($"Transaction with Id=\"{req.Id}\" is not found.");
+
+        data.Name = req.Name;
+        data.Date = req.Date.AsUtc().Truncate();
+        data.Cost = req.Cost;
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 

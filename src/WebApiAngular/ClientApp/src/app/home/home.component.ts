@@ -13,15 +13,34 @@ export class HomeComponent {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.http.get<ITransaction[]>('/api/transaction/get').subscribe(result => {
-      this.transactions = result;
-    }, error => console.error(error));
+    this.getTransactions();
   }
 
   public currencyFormatter = new Intl.NumberFormat('en-PH', {
     style: 'currency',
     currency: 'PHP',
   });
+
+  getTransactions() {
+    this.http.get<ITransaction[]>('/api/transaction/get').subscribe(result => {
+      this.transactions = result;
+    }, error => console.error(error));
+  }
+
+  deleteTransaction(transaction: ITransaction) {
+    const ok = confirm(`Are you sure you want to delete transaction [${transaction.name}]`);
+
+    if (!ok)
+      return;
+
+    this.http.delete<ITransaction[]>(`/api/transaction/delete/${transaction.id}`).subscribe(result => {
+
+
+      alert(`Transaction [${transaction.name}] record deleted.`);
+
+      this.getTransactions();
+    }, error => console.error(error));
+  }
 }
 
 

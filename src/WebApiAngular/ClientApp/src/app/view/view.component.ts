@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ITransaction } from '../models/Transaction';
 
 @Component({
@@ -12,7 +12,7 @@ export class ViewComponent {
   public id?: string;
   public errorMessage?: string;
 
-  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute, private _router: Router) { }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -35,5 +35,23 @@ export class ViewComponent {
   });
 
   public dateFormatter = new Intl.DateTimeFormat('en-PH');
+
+  deleteTransaction() {
+    if (this.transaction == null)
+      return;
+
+    const ok = confirm(`Are you sure you want to delete transaction [${this.transaction.name}]`);
+
+    if (!ok)
+      return;
+
+    this.http.delete<ITransaction[]>(`/api/transaction/delete/${this.transaction.id}`).subscribe(result => {
+
+      if (this.transaction != null) {
+        alert(`Transaction [${this.transaction.name}] record deleted.`);
+        this._router.navigateByUrl('/');
+      }
+    }, error => console.error(error));
+  }
 }
 
