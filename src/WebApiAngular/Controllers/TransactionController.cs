@@ -21,7 +21,7 @@ public class TransactionController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet]
+    [HttpGet("Get")]
     public async Task<IActionResult> GetAsync(
         [FromServices] AppDbContext dbContext,
         CancellationToken cancellationToken)
@@ -40,7 +40,7 @@ public class TransactionController : ControllerBase
         return Ok(dto);
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("GetById/{id:int}")]
     public async Task<IActionResult> GetByIdAsync(
         [FromServices] AppDbContext dbContext,
         [FromRoute] int id,
@@ -64,8 +64,8 @@ public class TransactionController : ControllerBase
         return Ok(dto);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> PostAsync(
+    [HttpPost("Create")]
+    public async Task<IActionResult> PostCreatAsync(
         [FromServices] AppDbContext dbContext,
         [FromBody] AddTransaction req,
         CancellationToken cancellationToken)

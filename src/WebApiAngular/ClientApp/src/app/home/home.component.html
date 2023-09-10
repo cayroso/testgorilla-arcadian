@@ -1,13 +1,12 @@
 <div class="row align-items-center">
   <div class="col">
     <h4>
-      <span class="fas fa-fw fa-home"></span>
-      List of Transactions
+      Dashboard/Transaction List
     </h4>
   </div>
   <div class="col-auto">
     <a routerLink="/create" class="btn btn-primary">
-      Add
+     <span class="fas fa-fw fa-plus me-1"></span>Add
     </a>
   </div>
 </div>
@@ -15,27 +14,29 @@
 <div class="mt-2">
 
   <p *ngIf="!transactions"><em>Loading transactions... Please wait.</em></p>
-  <table *ngIf="transactions" class="table table-sm border">
+  <table *ngIf="transactions" class="table border rounded">
     <thead>
       <tr>
         <th>#</th>
         <th>Name</th>
-        <th>Cost</th>
-        <!--<th>Date</th>-->
+        <th class="text-end">Cost</th>
+        <th class="text-center">Action</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let transaction of transactions; let i = index">
         <td>
-          {{i+1}}.
+          {{i+1}}
         </td>
         <td>
-          <a class="nav-link text-dark" routerLink="/view/{{transaction.id}}">
             {{ transaction.name }}
+        </td>
+        <td class="text-end">{{ currencyFormatter.format(transaction.cost) }}</td>
+        <td class="text-center">
+          <a routerLink="/view/{{transaction.id}}" class="btn btn-sm btn-outline-primary">
+            <span class="fas fa-fw fa-eye me-1"></span>View
           </a>
         </td>
-        <td>{{ currency.format(transaction.cost) }}</td>
-        <!--<td>{{ transaction.date }}</td>-->
       </tr>
     </tbody>
   </table>

@@ -10,10 +10,6 @@ import { HomeComponent } from './home/home.component';
 import { ViewComponent } from './view/view.component';
 import { CreateComponent } from './create/create.component';
 
-
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,9 +17,6 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     HomeComponent,
     ViewComponent,
     CreateComponent,
-
-    CounterComponent,
-    FetchDataComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -33,8 +26,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'view/:id', component: ViewComponent },
       { path: 'create', component: CreateComponent },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      //  other routes will redirect to dashboard
+      { path: '**', component: HomeComponent },
     ])
   ],
   providers: [],

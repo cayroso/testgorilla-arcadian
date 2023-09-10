@@ -1,25 +1,29 @@
 <header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-  >
+  <nav class="navbar navbar-expand navbar-toggleable-sm bg-primary box-shadow" data-bs-theme="dark">
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">WebApiAngular</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
+      <a class="navbar-brand" [routerLink]="['/']">TestGorilla-Arcadian</a>
+      <button class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target=".navbar-collapse"
+              aria-label="Toggle navigation"
+              [attr.aria-expanded]="isExpanded"
+              (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
-        [ngClass]="{ show: isExpanded }"
-      >
-        <ul class="navbar-nav flex-grow">
+      <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
+           [ngClass]="{ show: isExpanded }">
+        <div class="d-flex" role="search">
+          <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">Theme</span>
+            <select [(ngModel)]="selectedTheme" (change)="onSelectedTheme()" name="selectedTheme" class="form-control" placeholder="Theme" aria-describedby="basic-addon1">
+              <option *ngFor="let theme of themes" [ngValue]="theme.cssMin">
+                {{ theme.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <!--<ul class="navbar-nav flex-grow">
           <li
             class="nav-item"
             [routerLinkActive]="['link-active']"
@@ -37,7 +41,7 @@
               >Fetch data</a
             >
           </li>
-        </ul>
+        </ul>-->
       </div>
     </div>
   </nav>

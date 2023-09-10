@@ -1,20 +1,66 @@
 <div class="row align-items-center">
   <div class="col">
     <h4>
-      View Transaction
+      View
     </h4>
   </div>
   <div class="col-auto">
-    <a routerLink="/" class="btn btn-secondary">
-      Back
+    <a routerLink="/" class="btn btn-outline-secondary">
+      <span class="fas fa-fw fa-undo me-1"></span>Back
     </a>
   </div>
 </div>
 
-<p *ngIf="!transaction"><em>Loading...</em></p>
-<div *ngIf="transaction">
-  <div>Name: {{transaction.name}} </div>
-  <div>Cost: {{ currency.format(transaction.cost)}} </div>
-  <div>Date: {{ dateFormatter.format(transaction.date) }} </div>
-</div>
+<div class="mt-2">
+  <div *ngIf="errorMessage; then hasError; else noError">
+  </div>
 
+  <ng-template #hasError>
+    <div>
+      <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <div>
+          <span class="fas fa-fw fa-triangle-exclamation"></span>
+        </div>
+        <div class="ms-2">
+          {{ errorMessage }}
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #noError>
+    <div>
+      <p *ngIf="!transaction"><em>Loading...</em></p>
+      <div *ngIf="transaction">
+        <div class="form-floating mb-3">
+          <div type="text" id="name" name="name" class="form-control" readonly>
+            {{transaction.name}}
+          </div>
+          <label for="name">Transaction Name</label>
+        </div>
+
+        <div class="row row-cols-sm-2">
+          <div>
+            <div class="form-floating mb-3">
+              <div type="number" id="cost" name="cost" class="form-control" readonly>
+                {{ currencyFormatter.format(transaction.cost)}}
+              </div>
+              <label for="cost">Cost</label>
+            </div>
+          </div>
+          <div>
+            <div class="form-floating mb-3">
+              <div type="date" id="date" name="date" class="form-control" readonly>
+                {{ dateFormatter.format(transaction.date) }}
+              </div>
+              <label for="date">Date</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
+
+</div>

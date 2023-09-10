@@ -12,10 +12,7 @@ namespace Data.Models
 
     internal class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
     {
-        const int KeyMaxLength = 36;
         const int NameMaxLength = 256;
-        const int DescMaxLength = 2048;
-        const int NoteMaxLength = 4096;
 
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Transaction> b)
         {

@@ -9,23 +9,21 @@ import { Router } from '@angular/router';
 export class CreateComponent {
   public transaction: Transaction = new Transaction();
 
-  constructor(private http: HttpClient, private _router: Router) {
-
-  }
-  submitted = false;
-
-  onSubmit() { this.submitted = true; }
+  constructor(private http: HttpClient, private _router: Router) { }
 
   submit() {
 
     debugger;
-    this.http.post<Transaction>('/api/transaction', this.transaction).subscribe(result => {
-      this._router.navigateByUrl(`/view/${result}`);
+    this.http.post<Transaction>('/api/transaction/create', this.transaction).subscribe(result => {
+      //  NOTE: leaving this in case the requirement changed to view the record after creatd
+      //this._router.navigateByUrl(`/view/${result}`);
+
+      this._router.navigateByUrl('/');
+
     }, error => console.error(error));
   }
 }
 
 export class Transaction {
-  constructor(public name = '', public date?: Date, public cost: number = 1) {
-  }
+  constructor(public name: string = '', public date: Date = new Date(), public cost: number = 1) { }
 }

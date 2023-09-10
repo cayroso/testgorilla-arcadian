@@ -71,8 +71,7 @@ namespace Data.DbContexts
 
         public static readonly ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
         {
-            
-            //builder.AddConsole();
+            builder.AddConsole();
         });
     }
 }
