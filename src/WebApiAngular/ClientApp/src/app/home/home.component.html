@@ -1,0 +1,42 @@
+<div class="row align-items-center">
+  <div class="col">
+    <h4>
+      <span class="fas fa-fw fa-home"></span>
+      List of Transactions
+    </h4>
+  </div>
+  <div class="col-auto">
+    <a routerLink="/create" class="btn btn-primary">
+      Add
+    </a>
+  </div>
+</div>
+
+<div class="mt-2">
+
+  <p *ngIf="!transactions"><em>Loading transactions... Please wait.</em></p>
+  <table *ngIf="transactions" class="table table-sm border">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Cost</th>
+        <!--<th>Date</th>-->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of transactions; let i = index">
+        <td>
+          {{i+1}}.
+        </td>
+        <td>
+          <a class="nav-link text-dark" routerLink="/view/{{transaction.id}}">
+            {{ transaction.name }}
+          </a>
+        </td>
+        <td>{{ currency.format(transaction.cost) }}</td>
+        <!--<td>{{ transaction.date }}</td>-->
+      </tr>
+    </tbody>
+  </table>
+</div>

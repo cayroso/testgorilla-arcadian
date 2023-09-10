@@ -1,0 +1,20 @@
+<div class="row align-items-center">
+  <div class="col">
+    <h4>
+      View Transaction
+    </h4>
+  </div>
+  <div class="col-auto">
+    <a routerLink="/" class="btn btn-secondary">
+      Back
+    </a>
+  </div>
+</div>
+
+<p *ngIf="!transaction"><em>Loading...</em></p>
+<div *ngIf="transaction">
+  <div>Name: {{transaction.name}} </div>
+  <div>Cost: {{ currency.format(transaction.cost)}} </div>
+  <div>Date: {{ dateFormatter.format(transaction.date) }} </div>
+</div>
+
